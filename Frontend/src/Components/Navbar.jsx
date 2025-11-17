@@ -1,10 +1,16 @@
 import React, { useState, useContext } from 'react'
 import { assets } from '../assets/frontend_assets/assets'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 const Navbar = () => {
+    const navigate = useNavigate()
     const [visible, setVisible] = useState(false)
     const { user, logout } = useContext(AuthContext)
+
+    const handleLogout = () => {
+        logout()
+        navigate('/')
+    }
     return (
         <div className='flex items-center justify-between py-5 font-medium'>
             <img src={assets.logo} className='w-36' alt="" />
@@ -35,7 +41,7 @@ const Navbar = () => {
                             <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-slate-500 rounded'>
                                 <p className='cursor-pointer hover:text-black'>My Profile</p>
                                 <p className='cursor-pointer hover:text-black'>Orders</p>
-                                <p onClick={logout} className='cursor-pointer hover:text-black'>Logout</p>
+                                <p onClick={handleLogout} className='cursor-pointer hover:text-black'>Logout</p>
                             </div>
                         </div>
                     </div>
@@ -61,6 +67,14 @@ const Navbar = () => {
                     <NavLink onClick={()=>setVisible(false)}   className='py-2 pl-6 border ' to='/About'>ABOUT</NavLink>
                     <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border ' to='/Collection'>COLLECTION</NavLink>
                     <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border ' to='/Contact'>CONTACT</NavLink>
+                    {user ? (
+                        <p onClick={() => {
+                            handleLogout()
+                            setVisible(false)
+                        }} className='py-2 pl-6 border cursor-pointer text-gray-600 hover:text-black'>LOGOUT</p>
+                    ) : (
+                        <NavLink onClick={()=>setVisible(false)} className='py-2 pl-6 border ' to='/signin'>LOGIN</NavLink>
+                    )}
 
                 </div>
             </div>

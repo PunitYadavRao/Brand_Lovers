@@ -36,9 +36,9 @@ app.use((req, res) => {
 app.use(errorHandler)
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`)
-  console.log(`📊 Health check: http://localhost:${PORT}/health`)
-  console.log(`🔐 Auth routes: http://localhost:${PORT}/auth/*`)
+  console.log(`Server running on port ${PORT}`)
+  console.log(`Health check: http://localhost:${PORT}/health`)
+  console.log(`Auth routes: http://localhost:${PORT}/auth/*`)
 })
 
 export default app
