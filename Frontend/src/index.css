@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Almendra+Display&family=Playwrite+HU:wght@100..400&family=Playwrite+MX+Guides&family=Rubik+80s+Fade&display=swap');
+@import "tailwindcss";
+
+a.active hr{
+  display: block;
+}
+*{
+  font: Playwrite;
+}
+.playwrite-mx-guides-regular {
+  font-family: "Playwrite MX Guides", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.rubik-80s-fade-regular {
+  font-family: "Rubik 80s Fade", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.almendra-display-regular {
+  font-family: "Almendra Display", serif;
+  font-weight: 400;
+  font-style: normal;
+}
