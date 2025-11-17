@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  origin: process.env.CORS_ORIGIN,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -35,11 +35,14 @@ app.use((req, res) => {
 })
 app.use(errorHandler)
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`)
-  console.log(`📊 Health check: http://localhost:${PORT}/health`)
-  console.log(`🔐 Auth routes: http://localhost:${PORT}/auth/*`)
-})
+if(import.meta.env.NODE_ENV === 'development') {
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`)
+    console.log(`📊 Health check: http://localhost:${PORT}/health`)
+    console.log(`🔐 Auth routes: http://localhost:${PORT}/auth/*`)
+  })
+}
+
+module.exports = app
 
 
