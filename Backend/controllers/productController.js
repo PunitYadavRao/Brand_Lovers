@@ -11,6 +11,7 @@ export const getProducts = async (req, res) => {
       search,
       category,
       subCategory,
+      size,
       bestseller,
       sort = 'newest'
     } = req.query;
@@ -28,12 +29,32 @@ export const getProducts = async (req, res) => {
       ];
     }
 
+    // Handle multiple categories (comma-separated)
     if (category) {
-      where.category = category;
+      const categories = category.split(',').map(c => c.trim());
+      if (categories.length === 1) {
+        where.category = categories[0];
+      } else {
+        where.category = { in: categories };
+      }
     }
 
+    // Handle multiple subcategories (comma-separated)
     if (subCategory) {
-      where.subCategory = subCategory;
+      const subCategories = subCategory.split(',').map(sc => sc.trim());
+      if (subCategories.length === 1) {
+        where.subCategory = subCategories[0];
+      } else {
+        where.subCategory = { in: subCategories };
+      }
+    }
+
+    // Handle size filter (check if sizes JSON contains any of the requested sizes)
+    if (size) {
+      const requestedSizes = size.split(',').map(s => s.trim());
+      // We need to check if the product's sizes array contains any of the requested sizes
+      // Since sizes is stored as JSON string, we'll filter in memory after fetching
+      where.sizes = { contains: requestedSizes[0] }; // Basic filter, will refine in memory
     }
 
     if (bestseller === 'true') {
@@ -50,15 +71,35 @@ export const getProducts = async (req, res) => {
     }
 
     // Get products and total count
-    const [products, total] = await Promise.all([
+    let [products, total] = await Promise.all([
       prisma.product.findMany({
         where,
         orderBy,
         skip,
-        take
+        take: size ? undefined : take, // Fetch all if size filter is active, will paginate after filtering
+        skip: size ? undefined : skip
       }),
       prisma.product.count({ where })
     ]);
+
+    // Filter by size in memory (since sizes is stored as JSON string)
+    if (size) {
+      const requestedSizes = size.split(',').map(s => s.trim());
+      products = products.filter(product => {
+        try {
+          const productSizes = JSON.parse(product.sizes);
+          return requestedSizes.some(reqSize => productSizes.includes(reqSize));
+        } catch {
+          return false;
+        }
+      });
+
+      // Update total count after size filtering
+      total = products.length;
+
+      // Apply pagination after filtering
+      products = products.slice(skip, skip + take);
+    }
 
     res.json({
       success: true,

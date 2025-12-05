@@ -6,6 +6,7 @@ import productRoutes from './routes/productRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
 import cartRoutes from './routes/cartRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import contactRoutes from './routes/contactRoutes.js'
 import { errorHandler } from './middleware/auth.js'
 
 dotenv.config()
@@ -29,6 +30,7 @@ app.use('/api/products', productRoutes)
 app.use('/api/cart', cartRoutes)
 app.use('/api/orders', orderRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/contact', contactRoutes)
 
 app.get('/health', (req, res) => {
   return res.status(200).json({
