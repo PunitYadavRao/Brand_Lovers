@@ -283,8 +283,7 @@ export const deleteProduct = async (req, res) => {
     const existingProduct = await prisma.product.findUnique({
       where: { id: parseInt(id) },
       include: {
-        cartItems: true,
-        orderItems: true
+        cartItems: true
       }
     });
 
@@ -295,14 +294,6 @@ export const deleteProduct = async (req, res) => {
       });
     }
 
-    // Check if product is in any orders (preserve order history)
-    if (existingProduct.orderItems.length > 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Cannot delete product that exists in order history. Consider marking it as unavailable instead.'
-      });
-    }
-
     // Delete related cart items first (if any)
     if (existingProduct.cartItems.length > 0) {
       await prisma.cartItem.deleteMany({
@@ -310,7 +301,7 @@ export const deleteProduct = async (req, res) => {
       });
     }
 
-    // Now delete the product
+    // Delete the product (OrderItems will be handled by SetNull cascade)
     await prisma.product.delete({
       where: { id: parseInt(id) }
     });

@@ -139,6 +139,18 @@ export const createOrder = async (req, res) => {
             })
         }
 
+        // Fetch product details for snapshot
+        const productIds = items.map(item => item.productId);
+        const products = await prisma.product.findMany({
+            where: { id: { in: productIds } },
+            select: { id: true, name: true, image: true }
+        });
+
+        const productMap = products.reduce((map, p) => {
+            map[p.id] = p;
+            return map;
+        }, {});
+
         const order = await prisma.order.create({
             data: {
                 userId: parseInt(userId),
@@ -149,6 +161,8 @@ export const createOrder = async (req, res) => {
                 items: {
                     create: items.map(item => ({
                         productId: item.productId,
+                        productName: productMap[item.productId]?.name || 'Unknown Product',
+                        productImage: productMap[item.productId]?.image || '',
                         quantity: item.quantity,
                         size: item.size,
                         price: parseFloat(item.price)
@@ -397,7 +411,7 @@ export const createUserOrder = async (req, res) => {
             return total + (parseFloat(item.product.price) * item.quantity)
         }, 0)
 
-        // Create order
+        // Create order with product snapshot data
         const order = await prisma.order.create({
             data: {
                 userId,
@@ -408,6 +422,8 @@ export const createUserOrder = async (req, res) => {
                 items: {
                     create: cart.items.map(item => ({
                         productId: item.productId,
+                        productName: item.product.name,
+                        productImage: item.product.image,
                         quantity: item.quantity,
                         size: item.size,
                         price: parseFloat(item.product.price)

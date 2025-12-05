@@ -200,6 +200,9 @@ export const adminService = {
   getOrderById: (id) =>
     fetchWithAuth(`/api/admin/orders/${id}`),
 
+  deleteOrder: (id) =>
+    fetchWithAuth(`/api/admin/orders/${id}`, { method: 'DELETE' }),
+
   // Dashboard stats
   getDashboardStats: () =>
     fetchWithAuth('/api/admin/dashboard/stats'),

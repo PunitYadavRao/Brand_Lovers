@@ -88,14 +88,16 @@ model Order {
 }
 
 model OrderItem {
-  id        Int     @id @default(autoincrement())
-  orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId Int
-  product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
-  size      String?
-  price     Decimal
+  id           Int      @id @default(autoincrement())
+  orderId      Int
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId    Int?
+  product      Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName  String   @default("Unknown Product") // Store product name for order history
+  productImage String   @default("") // Store product image for order history
+  quantity     Int
+  size         String?
+  price        Decimal
 
   @@map("order_items")
 }
