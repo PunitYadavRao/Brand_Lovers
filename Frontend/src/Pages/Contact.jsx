@@ -63,15 +63,29 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      toast.success('Message sent successfully! We\'ll get back to you soon.');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/contact/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success(data.message);
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        toast.error(data.message || 'Failed to send message. Please try again.');
+      }
     } catch (error) {
+      console.error('Contact form error:', error);
       toast.error('Failed to send message. Please try again.');
     } finally {
       setIsSubmitting(false);
