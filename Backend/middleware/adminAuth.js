@@ -13,7 +13,6 @@ export const verifyAdmin = (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-        // Check if user has admin role
         if (!decoded.isAdmin || decoded.role !== 'ADMIN') {
             return res.status(403).json({
                 success: false,

@@ -281,7 +281,11 @@ export const deleteProduct = async (req, res) => {
 
     // Check if product exists
     const existingProduct = await prisma.product.findUnique({
-      where: { id: parseInt(id) }
+      where: { id: parseInt(id) },
+      include: {
+        cartItems: true,
+        orderItems: true
+      }
     });
 
     if (!existingProduct) {
@@ -291,7 +295,22 @@ export const deleteProduct = async (req, res) => {
       });
     }
 
-    // Delete product
+    // Check if product is in any orders (preserve order history)
+    if (existingProduct.orderItems.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Cannot delete product that exists in order history. Consider marking it as unavailable instead.'
+      });
+    }
+
+    // Delete related cart items first (if any)
+    if (existingProduct.cartItems.length > 0) {
+      await prisma.cartItem.deleteMany({
+        where: { productId: parseInt(id) }
+      });
+    }
+
+    // Now delete the product
     await prisma.product.delete({
       where: { id: parseInt(id) }
     });
@@ -304,7 +323,8 @@ export const deleteProduct = async (req, res) => {
     console.error('Error deleting product:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to delete product'
+      message: 'Failed to delete product',
+      error: error.message
     });
   }
 };

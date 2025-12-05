@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { cn } from '@/utils/utils';
 
-/**
- * Modal component with backdrop
- */
+
 const Modal = ({
     isOpen,
     onClose,
@@ -13,7 +11,7 @@ const Modal = ({
     size = 'md',
     className = '',
 }) => {
-    // Close on ESC key
+
     useEffect(() => {
         const handleEsc = (e) => {
             if (e.key === 'Escape' && isOpen) {
@@ -25,7 +23,7 @@ const Modal = ({
         return () => window.removeEventListener('keydown', handleEsc);
     }, [isOpen, onClose]);
 
-    // Prevent body scroll when modal is open
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -49,13 +47,13 @@ const Modal = ({
 
     return (
         <div className="fixed inset-0 z-[var(--z-modal)] overflow-y-auto">
-            {/* Backdrop */}
+
             <div
                 className="fixed inset-0 bg-black bg-opacity-50 transition-opacity animate-fadeIn"
                 onClick={onClose}
             />
 
-            {/* Modal */}
+
             <div className="flex min-h-full items-center justify-center p-4">
                 <div
                     className={cn(
@@ -65,7 +63,7 @@ const Modal = ({
                     )}
                     onClick={(e) => e.stopPropagation()}
                 >
-                    {/* Header */}
+
                     {title && (
                         <div className="flex items-center justify-between p-6 border-b">
                             <h3 className="text-xl font-semibold">{title}</h3>
@@ -80,12 +78,12 @@ const Modal = ({
                         </div>
                     )}
 
-                    {/* Body */}
+
                     <div className="p-6">
                         {children}
                     </div>
 
-                    {/* Footer */}
+
                     {footer && (
                         <div className="flex items-center justify-end gap-3 p-6 border-t bg-gray-50 rounded-b-lg">
                             {footer}

@@ -1,9 +1,7 @@
 import React from 'react';
 import { cn } from '@/utils/utils';
 
-/**
- * Pagination component
- */
+
 const Pagination = ({
     currentPage,
     totalPages,
@@ -36,7 +34,7 @@ const Pagination = ({
 
     return (
         <div className={cn('flex items-center justify-center gap-2', className)}>
-            {/* Previous Button */}
+
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={!canGoPrev}
@@ -53,7 +51,7 @@ const Pagination = ({
                 </svg>
             </button>
 
-            {/* Page Numbers */}
+
             {showPageNumbers && (
                 <>
                     {pageNumbers[0] > 1 && (
@@ -101,7 +99,7 @@ const Pagination = ({
                 </>
             )}
 
-            {/* Next Button */}
+
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={!canGoNext}

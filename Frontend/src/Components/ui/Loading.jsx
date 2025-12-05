@@ -1,9 +1,7 @@
 import React from 'react';
 import { cn } from '@/utils/utils';
 
-/**
- * Loading spinner component
- */
+
 export const Spinner = ({ size = 'md', className = '' }) => {
     const sizes = {
         sm: 'h-4 w-4',
@@ -16,9 +14,7 @@ export const Spinner = ({ size = 'md', className = '' }) => {
     );
 };
 
-/**
- * Full page loading component
- */
+
 export const PageLoading = () => {
     return (
         <div className="flex items-center justify-center min-h-[400px]">
@@ -27,9 +23,7 @@ export const PageLoading = () => {
     );
 };
 
-/**
- * Skeleton loader for cards
- */
+
 export const SkeletonCard = () => {
     return (
         <div className="animate-pulse">
@@ -40,9 +34,7 @@ export const SkeletonCard = () => {
     );
 };
 
-/**
- * Skeleton loader for product grid
- */
+
 export const ProductGridSkeleton = ({ count = 8 }) => {
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -53,9 +45,7 @@ export const ProductGridSkeleton = ({ count = 8 }) => {
     );
 };
 
-/**
- * Generic skeleton loader
- */
+
 export const Skeleton = ({ className = '', ...props }) => {
     return (
         <div

@@ -67,13 +67,8 @@ const OrdersList = () => {
                     <h1 className='text-2xl font-bold text-gray-900'>Orders Management</h1>
                     <p className='text-gray-600 mt-1'>Manage all customer orders</p>
                 </div>
-                <Link
-                    to='/admin/orders/create'
-                    className='px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition'
-                >
-                    Create Order
-                </Link>
             </div>
+
 
             {/* Filters */}
             <div className='bg-white rounded-lg shadow p-4'>

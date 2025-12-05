@@ -3,9 +3,7 @@ import { useShop } from '@/hooks/useShop';
 import { CATEGORIES, SUBCATEGORIES, SIZES } from '@/utils/constants';
 import { cn } from '@/utils/utils';
 
-/**
- * FilterPanel component for product filtering
- */
+
 const FilterPanel = ({ className = '', isMobile = false }) => {
     const {
         selectedCategories,
@@ -27,7 +25,7 @@ const FilterPanel = ({ className = '', isMobile = false }) => {
 
     return (
         <div className={cn('bg-white', isMobile ? 'p-4' : '', className)}>
-            {/* Header */}
+
             <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold">Filters</h3>
                 {hasActiveFilters && (
@@ -40,7 +38,7 @@ const FilterPanel = ({ className = '', isMobile = false }) => {
                 )}
             </div>
 
-            {/* Categories */}
+
             <div className="mb-6">
                 <h4 className="font-medium mb-3">Category</h4>
                 <div className="space-y-2">
@@ -60,7 +58,7 @@ const FilterPanel = ({ className = '', isMobile = false }) => {
                 </div>
             </div>
 
-            {/* Subcategories (Type) */}
+
             <div className="mb-6">
                 <h4 className="font-medium mb-3">Type</h4>
                 <div className="space-y-2">
@@ -80,7 +78,7 @@ const FilterPanel = ({ className = '', isMobile = false }) => {
                 </div>
             </div>
 
-            {/* Sizes */}
+
             <div className="mb-6">
                 <h4 className="font-medium mb-3">Size</h4>
                 <div className="flex flex-wrap gap-2">
@@ -101,7 +99,7 @@ const FilterPanel = ({ className = '', isMobile = false }) => {
                 </div>
             </div>
 
-            {/* Bestseller */}
+
             <div className="mb-6">
                 <label className="flex items-center cursor-pointer group">
                     <input

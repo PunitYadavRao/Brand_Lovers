@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-
-// Get user's cart with items
 export const getCart = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -26,8 +24,6 @@ export const getCart = async (req, res) => {
                 }
             }
         });
-
-        // Create cart if doesn't exist
         if (!cart) {
             cart = await prisma.cart.create({
                 data: { userId },
@@ -62,8 +58,6 @@ export const getCart = async (req, res) => {
         });
     }
 };
-
-// Add item to cart
 export const addToCart = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -76,7 +70,6 @@ export const addToCart = async (req, res) => {
             });
         }
 
-        // Verify product exists
         const product = await prisma.product.findUnique({
             where: { id: parseInt(productId) }
         });
@@ -88,7 +81,6 @@ export const addToCart = async (req, res) => {
             });
         }
 
-        // Get or create cart
         let cart = await prisma.cart.findUnique({
             where: { userId }
         });
@@ -99,7 +91,6 @@ export const addToCart = async (req, res) => {
             });
         }
 
-        // Check if item already exists in cart
         const existingItem = await prisma.cartItem.findFirst({
             where: {
                 cartId: cart.id,
@@ -110,7 +101,6 @@ export const addToCart = async (req, res) => {
 
         let cartItem;
         if (existingItem) {
-            // Update quantity
             cartItem = await prisma.cartItem.update({
                 where: { id: existingItem.id },
                 data: { quantity: existingItem.quantity + parseInt(quantity) },
@@ -126,7 +116,6 @@ export const addToCart = async (req, res) => {
                 }
             });
         } else {
-            // Create new cart item
             cartItem = await prisma.cartItem.create({
                 data: {
                     cartId: cart.id,
@@ -161,14 +150,12 @@ export const addToCart = async (req, res) => {
     }
 };
 
-// Update cart item
 export const updateCartItem = async (req, res) => {
     try {
         const userId = req.user.userId;
         const { itemId } = req.params;
         const { quantity, size } = req.body;
 
-        // Verify cart item belongs to user
         const cartItem = await prisma.cartItem.findFirst({
             where: {
                 id: parseInt(itemId),
@@ -183,7 +170,6 @@ export const updateCartItem = async (req, res) => {
             });
         }
 
-        // Update cart item
         const updateData = {};
         if (quantity !== undefined) updateData.quantity = parseInt(quantity);
         if (size !== undefined) updateData.size = size;
@@ -216,14 +202,11 @@ export const updateCartItem = async (req, res) => {
         });
     }
 };
-
-// Remove item from cart
 export const removeFromCart = async (req, res) => {
     try {
         const userId = req.user.userId;
         const { itemId } = req.params;
 
-        // Verify cart item belongs to user
         const cartItem = await prisma.cartItem.findFirst({
             where: {
                 id: parseInt(itemId),
@@ -237,8 +220,6 @@ export const removeFromCart = async (req, res) => {
                 message: 'Cart item not found'
             });
         }
-
-        // Delete cart item
         await prisma.cartItem.delete({
             where: { id: parseInt(itemId) }
         });
@@ -256,7 +237,6 @@ export const removeFromCart = async (req, res) => {
     }
 };
 
-// Clear entire cart
 export const clearCart = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -272,7 +252,6 @@ export const clearCart = async (req, res) => {
             });
         }
 
-        // Delete all cart items
         await prisma.cartItem.deleteMany({
             where: { cartId: cart.id }
         });

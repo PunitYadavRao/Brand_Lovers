@@ -1,9 +1,7 @@
 import React from 'react';
 import { cn } from '@/utils/utils';
 
-/**
- * Button component with multiple variants and sizes
- */
+
 const Button = ({
     children,
     variant = 'primary',

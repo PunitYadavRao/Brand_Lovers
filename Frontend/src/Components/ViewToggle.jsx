@@ -1,9 +1,7 @@
 import React from 'react';
 import { cn } from '@/utils/utils';
 
-/**
- * ViewToggle component for switching between grid and list views
- */
+
 const ViewToggle = ({ view, onViewChange, className = '' }) => {
     return (
         <div className={cn('flex items-center gap-2 bg-gray-100 rounded-lg p-1', className)}>

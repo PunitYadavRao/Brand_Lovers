@@ -4,9 +4,7 @@ import { useShop } from '@/hooks/useShop';
 import { formatCurrency } from '@/utils/utils';
 import Button from './ui/Button';
 
-/**
- * CartItem component for displaying individual cart items
- */
+
 const CartItem = ({ item, onUpdate, onRemove }) => {
     const { currency } = useShop();
     const [isUpdating, setIsUpdating] = useState(false);
@@ -14,7 +12,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
 
     const { product, size, quantity } = item;
 
-    // Handle quantity change
+
     const handleQuantityChange = async (newQuantity) => {
         if (newQuantity < 1) return;
         setIsUpdating(true);
@@ -22,14 +20,14 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
         setIsUpdating(false);
     };
 
-    // Handle size change
+
     const handleSizeChange = async (newSize) => {
         setIsUpdating(true);
         await onUpdate(item.id, quantity, newSize);
         setIsUpdating(false);
     };
 
-    // Handle remove
+
     const handleRemove = async () => {
         setIsRemoving(true);
         await onRemove(item.id);
@@ -46,7 +44,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
             `}
         >
             <div className="flex gap-4 md:gap-6">
-                {/* Product Image */}
+
                 <Link
                     to={`/product/${product.id}`}
                     className="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-lg overflow-hidden bg-gray-100 group"
@@ -58,7 +56,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
                     />
                 </Link>
 
-                {/* Product Details */}
+
                 <div className="flex-1 min-w-0">
                     <div className="flex justify-between gap-4 mb-2">
                         <div className="flex-1 min-w-0">
@@ -73,7 +71,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
                             </p>
                         </div>
 
-                        {/* Remove Button - Desktop */}
+
                         <button
                             onClick={handleRemove}
                             disabled={isRemoving}
@@ -86,9 +84,9 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
                         </button>
                     </div>
 
-                    {/* Controls */}
+
                     <div className="flex flex-wrap items-center gap-4 mt-4">
-                        {/* Size Selector */}
+
                         <div className="flex items-center gap-2">
                             <span className="text-sm text-gray-600">Size:</span>
                             <select
@@ -103,7 +101,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
                             </select>
                         </div>
 
-                        {/* Quantity Controls */}
+
                         <div className="flex items-center gap-2">
                             <span className="text-sm text-gray-600">Qty:</span>
                             <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -133,7 +131,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
                             </div>
                         </div>
 
-                        {/* Price */}
+
                         <div className="ml-auto">
                             <p className="text-lg md:text-xl font-bold text-gray-900">
                                 {formatCurrency(itemTotal, currency)}
@@ -146,7 +144,7 @@ const CartItem = ({ item, onUpdate, onRemove }) => {
                         </div>
                     </div>
 
-                    {/* Remove Button - Mobile */}
+
                     <button
                         onClick={handleRemove}
                         disabled={isRemoving}

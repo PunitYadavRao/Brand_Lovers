@@ -3,17 +3,15 @@ import { useShop } from '@/hooks/useShop';
 import { useDebounce } from '@/hooks/useDebounce';
 import { cn } from '@/utils/utils';
 
-/**
- * SearchBar component with debounced search
- */
+
 const SearchBar = ({ className = '', placeholder = 'Search products...' }) => {
     const { searchQuery, setSearchQuery, setCurrentPage } = useShop();
     const [localQuery, setLocalQuery] = React.useState(searchQuery);
 
-    // Debounce the search query
+
     const debouncedQuery = useDebounce(localQuery, 300);
 
-    // Update context when debounced value changes
+
     React.useEffect(() => {
         setSearchQuery(debouncedQuery);
         setCurrentPage(1); // Reset to first page on search

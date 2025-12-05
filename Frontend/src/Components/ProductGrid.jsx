@@ -3,9 +3,7 @@ import ProductCard from './ProductCard';
 import { ProductGridSkeleton } from './ui/Loading';
 import { cn } from '@/utils/utils';
 
-/**
- * ProductGrid component for displaying products in a responsive grid
- */
+
 const ProductGrid = ({
     products = [],
     loading = false,

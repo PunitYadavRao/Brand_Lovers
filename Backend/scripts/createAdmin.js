@@ -6,8 +6,6 @@ async function createAdminUser() {
         const adminEmail = 'admin@brandlovers.com'
         const adminPassword = 'admin123'
         const adminName = 'Admin User'
-
-        // Check if admin already exists
         const existingAdmin = await prisma.user.findUnique({
             where: { email: adminEmail }
         })
@@ -17,8 +15,6 @@ async function createAdminUser() {
             console.log('Email:', adminEmail)
             return
         }
-
-        // Create admin user
         const hashedPassword = await bcryptjs.hash(adminPassword, 10)
         const admin = await prisma.user.create({
             data: {
@@ -30,10 +26,10 @@ async function createAdminUser() {
             }
         })
 
-        console.log('✅ Admin user created successfully!')
+        console.log(' Admin user created successfully!')
         console.log('Email:', adminEmail)
         console.log('Password:', adminPassword)
-        console.log('⚠️  Please change the password after first login!')
+        console.log('Please change the password after first login!')
     } catch (error) {
         console.error('Error creating admin user:', error)
     } finally {

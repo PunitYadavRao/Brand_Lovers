@@ -3,9 +3,7 @@ import { useShop } from '@/hooks/useShop';
 import { SORT_OPTIONS } from '@/utils/constants';
 import { cn } from '@/utils/utils';
 
-/**
- * SortDropdown component for product sorting
- */
+
 const SortDropdown = ({ className = '' }) => {
     const { sortOption, setSortOption, setCurrentPage } = useShop();
 
@@ -32,7 +30,7 @@ const SortDropdown = ({ className = '' }) => {
                 ))}
             </select>
 
-            {/* Custom dropdown arrow */}
+
             <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />

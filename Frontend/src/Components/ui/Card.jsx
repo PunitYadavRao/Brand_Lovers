@@ -1,9 +1,7 @@
 import React from 'react';
 import { cn } from '@/utils/utils';
 
-/**
- * Card component with variants
- */
+
 const Card = ({
     children,
     className = '',
@@ -36,9 +34,7 @@ const Card = ({
     );
 };
 
-/**
- * Card Header
- */
+
 Card.Header = ({ children, className = '' }) => {
     return (
         <div className={cn('mb-4', className)}>
@@ -47,9 +43,7 @@ Card.Header = ({ children, className = '' }) => {
     );
 };
 
-/**
- * Card Body
- */
+
 Card.Body = ({ children, className = '' }) => {
     return (
         <div className={cn('', className)}>
@@ -58,9 +52,7 @@ Card.Body = ({ children, className = '' }) => {
     );
 };
 
-/**
- * Card Footer
- */
+
 Card.Footer = ({ children, className = '' }) => {
     return (
         <div className={cn('mt-4 pt-4 border-t border-gray-200', className)}>

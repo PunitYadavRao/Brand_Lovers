@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 
-// Authenticate user from JWT token
 export const authenticate = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1]
@@ -23,7 +22,6 @@ export const authenticate = async (req, res, next) => {
   }
 }
 
-// Require admin role
 export const requireAdmin = async (req, res, next) => {
   try {
     if (!req.user || !req.user.isAdmin) {
@@ -41,7 +39,6 @@ export const requireAdmin = async (req, res, next) => {
   }
 }
 
-// Legacy alias for backward compatibility
 export const verifyToken = authenticate
 
 export const errorHandler = (err, req, res, next) => {

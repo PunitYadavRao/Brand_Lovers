@@ -1,9 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cn } from '@/utils/utils';
 
-/**
- * Input component with error states and icon support
- */
+
 const Input = forwardRef(({
     type = 'text',
     label,

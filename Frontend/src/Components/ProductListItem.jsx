@@ -5,9 +5,7 @@ import { formatCurrency } from '@/utils/utils';
 import { cn } from '@/utils/utils';
 import Button from './ui/Button';
 
-/**
- * ProductListItem component for list view display
- */
+
 const ProductListItem = ({ product, className = '' }) => {
     const { currency } = useShop();
 
@@ -19,7 +17,7 @@ const ProductListItem = ({ product, className = '' }) => {
             )}
         >
             <div className="flex flex-col sm:flex-row gap-4 p-4">
-                {/* Product Image */}
+
                 <Link
                     to={`/product/${product.id}`}
                     className="flex-shrink-0 w-full sm:w-48 h-48 rounded-lg overflow-hidden bg-gray-100"
@@ -32,7 +30,7 @@ const ProductListItem = ({ product, className = '' }) => {
                     />
                 </Link>
 
-                {/* Product Info */}
+
                 <div className="flex-1 flex flex-col justify-between min-w-0">
                     <div>
                         <div className="flex items-start justify-between gap-4 mb-2">
@@ -61,7 +59,7 @@ const ProductListItem = ({ product, className = '' }) => {
                             </p>
                         )}
 
-                        {/* Sizes */}
+
                         {product.sizes && product.sizes.length > 0 && (
                             <div className="flex items-center gap-2 mb-4">
                                 <span className="text-sm text-gray-600">Sizes:</span>
@@ -84,7 +82,7 @@ const ProductListItem = ({ product, className = '' }) => {
                         )}
                     </div>
 
-                    {/* Price and Action */}
+
                     <div className="flex items-center justify-between gap-4 mt-4">
                         <p className="text-2xl font-bold text-gray-900">
                             {formatCurrency(product.price, currency)}
